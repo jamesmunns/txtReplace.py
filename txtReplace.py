@@ -1,26 +1,30 @@
 #!/usr/bin/env python2
+import argparse
 import os
 import re
-import sys
 
-try:
-   scriptname, source, find, replace = argv
-except:
-    print( """Invalid arguments passed. Usage:\n scriptname.py source-path find-argument replace-argument""")
-    sys.exit()
+args_setup = argparse.ArgumentParser(description='Recursive Text Replacement')
+
+args_setup.add_argument('--path',    '-p', type=str, default=os.getcwd(), help='Parent Path to recursively travel', required=False)
+args_setup.add_argument('--find',    '-f', type=str, help='Text to find', required=True )
+args_setup.add_argument('--replace', '-r', type=str, help='Replacement text', required=True )
+
+pargs = args_setup.parse_args()
 
 textfiles = []
-for root, dirnames, filenames in os.walk(args.source):
+count = 0
+
+for root, dirnames, filenames in os.walk(pargs.path):
     for filename in filter(lambda s: s.endswith(".txt"), filenames):
         textfiles.append(os.path.join(root, filename))
 
-args.find, args.replace = map(re.escape, [args.find, args.replace])
 for textfile in textfiles:
     with open(textfile, 'r') as f:
-        content, count = re.subn(args.find, args.replace, f.read())
+        content, t_count = re.subn(pargs.find, pargs.replace, f.read())
+        count += t_count
 
     with open(textfile, 'w') as f:
         f.write(content)
 
 print "Replaced {} occurences of {} in {}".format(
-    str(count), args.find, args.source)
+    str(count), pargs.find, pargs.path)

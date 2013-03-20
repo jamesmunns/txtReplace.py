@@ -1,11 +1,11 @@
 txtReplace.py
 =============
 
-Simple command line tool allowing for recursive mass find and replace for multiple text files existing across different directories. 
+Simple command line tool allowing for recursive mass find and replace for multiple text files existing across different directories.
 
 ***Important Notes***
 
-Launch this script in the parent directory of your text files. 
+Launch this script in the parent directory of your text files.
 
 For example:
 
@@ -16,9 +16,9 @@ For example:
 	- Dir3
 </pre>
 
-Where Dir1, Dir2 and Dir3 contain the text files. 
+Where Dir1, Dir2 and Dir3 contain the text files.
 
 Usage
 -----
 
-	$$ python txtReplace.py -s [source parent path] -f [find argument] -r [replace argument]
+	$$ python txtReplace.py [-h] [--path PATH] --find FIND --replace REPLACE
